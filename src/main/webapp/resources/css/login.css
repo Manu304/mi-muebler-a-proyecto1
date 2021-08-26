@@ -1,0 +1,37 @@
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    padding-top: 15em;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+    
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 350px;
+    padding: 15px;
+    margin: auto;
+
+
+}
+
+.contenedor .form-floating:focus-within {
+    z-index: 2;
+}
+
+.contenedor input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.contenedor input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
