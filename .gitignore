@@ -1,0 +1,9 @@
+target/
+.classpath
+.project
+.settings/
+src/test/
+build/
+lib/
+nbactions.xml
+nb-configuration.xml
