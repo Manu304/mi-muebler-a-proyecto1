@@ -40,4 +40,10 @@ public class DataValidator {
         return valido;
     }
 
+    public static double redondearNumero(double numero, int decimales){
+        double cantidadCero = Math.pow(10.0, decimales);
+        double valor = Math.round(numero*cantidadCero)/cantidadCero;
+        return valor;
+    }
+
 }
