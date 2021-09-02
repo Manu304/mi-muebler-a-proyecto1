@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mrojas.pruebas.mi_muebleria.controllers.session_controllers;
+package com.mrojas.pruebas.mi_muebleria.controllers.session;
 
 import com.mrojas.pruebas.mi_muebleria.services.LoginServiceSession;
 import java.io.IOException;

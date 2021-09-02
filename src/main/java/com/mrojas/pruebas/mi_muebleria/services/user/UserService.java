@@ -1,7 +1,9 @@
-package com.mrojas.pruebas.mi_muebleria.services;
+package com.mrojas.pruebas.mi_muebleria.services.user;
 
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
 import com.mrojas.pruebas.mi_muebleria.repositories.users.UserRepository;
+import com.mrojas.pruebas.mi_muebleria.services.EntityService;
+import com.mrojas.pruebas.mi_muebleria.services.ServiceJdbcException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -51,10 +53,9 @@ public class UserService implements EntityService<Usuario>{
     }
 
     @Override
-    public void guardar(Usuario user) {
+    public void guardar(Usuario t) {
         try {
-            userRepository.guardar(user);
-            System.out.println("estoy en el service del user guardar");
+            userRepository.guardar(t);
         } catch (SQLException e) {
             throw new ServiceJdbcException(e.getMessage(), e.getCause());
         }
@@ -64,7 +65,6 @@ public class UserService implements EntityService<Usuario>{
     public void eliminar(String primaryKey) {
         try {
             userRepository.eliminar(primaryKey);
-            System.out.println("estoy en el service del user eliminar");
         } catch (SQLException e) {
             throw new ServiceJdbcException(e.getMessage(), e.getCause());
         }

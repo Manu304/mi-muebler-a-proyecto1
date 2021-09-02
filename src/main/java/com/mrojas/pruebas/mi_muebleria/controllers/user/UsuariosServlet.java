@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mrojas.pruebas.mi_muebleria.controllers.user_controllers;
+package com.mrojas.pruebas.mi_muebleria.controllers.user;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
-import com.mrojas.pruebas.mi_muebleria.services.UserService;
+import com.mrojas.pruebas.mi_muebleria.services.user.UserService;
 
 /**
  *

@@ -1,8 +1,8 @@
-package com.mrojas.pruebas.mi_muebleria.controllers.user_controllers;
+package com.mrojas.pruebas.mi_muebleria.controllers.user;
 
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
 import com.mrojas.pruebas.mi_muebleria.services.LoginServiceSession;
-import com.mrojas.pruebas.mi_muebleria.services.UserService;
+import com.mrojas.pruebas.mi_muebleria.services.user.UserService;
 import com.mrojas.pruebas.mi_muebleria.util.DataValidator;
 
 import java.io.IOException;
@@ -17,16 +17,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Manu
  */
-@WebServlet(name = "CrearUsuarioServlet", urlPatterns = { "/user/admin/new-user" })
+@WebServlet(name = "CrearUsuarioServlet", urlPatterns = {"/user/admin/new-user"})
 public class CrearUsuarioServlet extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -104,10 +104,10 @@ public class CrearUsuarioServlet extends HttpServlet {
             }
 
         } else {
-            if (Boolean.parseBoolean(esEdit)) {
-                request.setAttribute("username", username);
-                request.setAttribute("tipo", userRole);
-            }
+
+            request.setAttribute("username", username.trim());
+            request.setAttribute("tipo", userRole);
+
             request.setAttribute("edit", esEdit);
             request.setAttribute("errores", errores);
             getServletContext().getRequestDispatcher("/user/admin/crear-usuario.jsp").forward(request, response);

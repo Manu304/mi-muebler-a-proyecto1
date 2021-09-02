@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mrojas.pruebas.mi_muebleria.controllers.session_controllers;
+package com.mrojas.pruebas.mi_muebleria.controllers.session;
 
 import com.mrojas.pruebas.mi_muebleria.models.users.UserRole;
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
 import com.mrojas.pruebas.mi_muebleria.services.LoginServiceSession;
-import com.mrojas.pruebas.mi_muebleria.services.UserService;
+import com.mrojas.pruebas.mi_muebleria.services.user.UserService;
 
 import java.io.IOException;
 import java.util.Optional;
