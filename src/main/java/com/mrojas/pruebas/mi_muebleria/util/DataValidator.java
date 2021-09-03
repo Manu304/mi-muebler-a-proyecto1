@@ -40,6 +40,16 @@ public class DataValidator {
         return valido;
     }
 
+    public static boolean isAlfanumerico(String valor){
+        boolean valido = true;
+        for (int i = 0; i < valor.length(); i++) {
+            if (!Character.isAlphabetic(valor.charAt(i)) && valor.charAt(i) != ' ') {
+                valido = false;
+            }
+        }
+        return valido;
+    }
+
     public static double redondearNumero(double numero, int decimales){
         double cantidadCero = Math.pow(10.0, decimales);
         double valor = Math.round(numero*cantidadCero)/cantidadCero;
