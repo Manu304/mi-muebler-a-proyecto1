@@ -1,8 +1,13 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/user/admin/index.jsp" />
+<c:if test="${sessionScope.userRole != 'ADMIN'}">
+    <c:redirect url="/login"></c:redirect>
+</c:if>
+<jsp:include page="../../includes/header.jsp" />
 
 <div class="container" style="padding-top: 150px; max-width: 1000px;">
+
+    <h1>Control de Usuarios Registrados</h1>
 
     <table class="table table-dark table-striped">
         <thead>
@@ -22,7 +27,7 @@
                     <th scope="row">${u.nombre}</th>
                     <td>${u.rol}</td>
                     <td>${u.activo ? 'ACTIVO' : 'CANCELADO'}</td>
-                    
+
 
                     <c:choose>
                         <c:when test="${sessionScope.username == u.nombre}">
@@ -34,10 +39,10 @@
                             <td><a role="button" class="btn btn-info" href="${pageContext.request.contextPath}/user/admin/new-user?username=${u.nombre}&tipo=${u.tipo}&edit=true">EDITAR</a></td>
                             <td><a role="button" class="btn btn-${u.activo ? 'warning' : 'success'}" href="${pageContext.request.contextPath}/user/admin/cancelar?user=${u.nombre}">${u.activo ? 'CANCELAR' : 'ACTIVAR'}</a></td>        
                             <td><a role="button" class="btn btn-danger" href="${pageContext.request.contextPath}/user/admin/delete?user=${u.nombre}">ELIMINAR</a></td>
-                            </c:otherwise>
-                        </c:choose>
+                        </c:otherwise>
+                    </c:choose>
 
-                    
+
                 </tr>
             </c:forEach>
 

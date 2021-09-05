@@ -5,12 +5,12 @@
 </c:if>
 
 
-<jsp:include page="/user/admin/index.jsp" />
+<jsp:include page="../../includes/header.jsp" />
 
 <div class="container" style="padding-top: 150px; max-width: 1000px;">
 
     <form class="row g-3" method="POST" action="new-user">
-        <h1 class="display-1">${edit ? 'Editar Usuario' : 'Crear Usuario'}</h1>
+        <h1>${edit ? 'Editar Usuario' : 'Crear Usuario'}</h1>
         <div class="col-md-4">
             <label for="inputUsername4" class="form-label">Nombre de Usuario</label>
             <input type="text" class="form-control" name="username" value="${requestScope.username}" ${edit ? 'readonly' : ''}>
@@ -58,7 +58,7 @@
         </div>
         <c:if test="${edit}">
         <input type="hidden" name="edit" value="${edit}">
-        <input type="hidden" name="username" value="${requestScope.username}">    
+        
         </c:if>
         
         
