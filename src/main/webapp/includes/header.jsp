@@ -38,7 +38,7 @@
                     <span class="fs-4">Mi Mueblería</span>
                 </a>
                 <hr>
-                <!-<!-- OPCIONES PARA EL ADMINISTRADOR -->
+                <!-- OPCIONES PARA EL ADMINISTRADOR -->
                 <c:if test="${sessionScope.userRole == 'ADMIN'}">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link text-white">
+                            <a href="${pageContext.request.contextPath}/user/admin/crear-mueble.jsp" class="nav-link text-white">
                                 Crear Mueble
                             </a>
                         </li>
@@ -64,11 +64,16 @@
                     </ul> 
                 </c:if>
 
-                <!-<!-- OPCIONES PARA EL FABRICANTE -->
+                <!-- OPCIONES PARA EL FABRICANTE -->
                 <c:if test="${sessionScope.userRole == 'FABRICANTE'}">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="${pageContext.request.contextPath}/user/admin/crear-usuario.jsp" class="nav-link text-white">
+                            <a href="${pageContext.request.contextPath}/user/fabricante/crear-pieza.jsp" class="nav-link text-white">
+                                Registrar Pieza
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="${pageContext.request.contextPath}/user/fabricante/inventario-piezas" class="nav-link text-white">
                                 Inventario de Piezas
                             </a>
                         </li>
@@ -90,7 +95,7 @@
                     </ul> 
                 </c:if>
 
-                <!-<!-- OPCIONES PARA EL VENDEDOR -->
+                <!-- OPCIONES PARA EL VENDEDOR -->
                 <c:if test="${sessionScope.userRole == 'VENDEDOR'}">
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
