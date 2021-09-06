@@ -23,17 +23,18 @@ import javax.servlet.http.HttpSession;
  *
  * @author Manu
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+@WebServlet(name = "LoginServlet", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +43,7 @@ public class LoginServlet extends HttpServlet {
         Optional<String> usernameOptional = auth.getUsername(request);
         Optional<UserRole> userRole = auth.getUserRole(request);
         boolean userIsActivo = auth.getEstado(request);
-        
+
         System.out.println("estoy en el get service");
 
         if (usernameOptional.isPresent() && userIsActivo && userRole.isPresent()) {
@@ -67,10 +68,10 @@ public class LoginServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -88,7 +89,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userRole", usuarioOptional.get().getRol());
                 session.setAttribute("userState", usuarioOptional.get().isActivo());
                 doGet(request, response);
-            }else{
+            } else {
                 error = "Tu usuario ha sido cancelado. No puedes iniciar sesión";
                 request.setAttribute("error", error);
                 getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
