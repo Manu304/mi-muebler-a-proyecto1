@@ -12,7 +12,10 @@ import com.mrojas.pruebas.mi_muebleria.services.pieza.PiezaService;
 import com.mrojas.pruebas.mi_muebleria.util.DataValidator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,15 +45,21 @@ public class PiezasServlet extends HttpServlet {
         LoginServiceSession sessionService = new LoginServiceSession();
         String col = request.getParameter("col");
         String asc = request.getParameter("asc");
+        String search = request.getParameter("search");
         if (sessionService.isRole(request, UserRole.FABRICANTE)) {
             PiezaService service = new PiezaService();
-            List<Pieza> piezas;
+            List<Pieza> piezas= new ArrayList<>();
             if (DataValidator.isEntero(col)) {
                 piezas = service.orderBy(Integer.parseInt(col)-1, Boolean.parseBoolean(asc));
-            } else {
+            } else if(DataValidator.isValidString(search)){
+                Optional<Pieza> piezaBuscada = service.porIdentificador(search);
+                if (piezaBuscada.isPresent()) {
+                    piezas.add(piezaBuscada.get());
+                }
+            }else{
                 piezas = service.listar();
             }
-
+            request.setAttribute("search", search);
             request.setAttribute("piezas", piezas);
             getServletContext().getRequestDispatcher("/user/fabricante/inventario-piezas.jsp").forward(request,
                     response);
