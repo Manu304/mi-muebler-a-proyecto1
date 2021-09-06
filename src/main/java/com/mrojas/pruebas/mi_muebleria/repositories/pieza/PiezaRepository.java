@@ -84,7 +84,8 @@ public class PiezaRepository implements Repository<Pieza> {
         List<Pieza> piezas = new ArrayList<>();
         try (Connection connection = getConnection();
                 Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLA + " ORDER BY " + columna + (asc?" ASC":" DESC"))) {
+                ResultSet rs = stmt
+                        .executeQuery("SELECT * FROM " + TABLA + " ORDER BY " + columna + (asc ? " ASC" : " DESC"))) {
             while (rs.next()) {
                 Pieza pieza = getPieza(rs);
                 piezas.add(pieza);

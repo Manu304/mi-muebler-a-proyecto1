@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class UserRepository implements Repository<Usuario> {
 
-    // private Connection connection;
     private static final String TABLA = "usuario";
 
     public UserRepository() {
@@ -21,12 +20,12 @@ public class UserRepository implements Repository<Usuario> {
     }
 
     /**
-     * Metodo que cambia el estado del usuario al contrario del que ya tiene
-     *
-     * @param t Usuario al cual se le va a actualizar el estado
+     * Metodo para verificar las credenciales del usuario en la base de datos.
+     * @param nombre El nombre del usuario en la base de datos, osea el identificador.
+     * @param password La contraseña del usuario en la base de datos.
+     * @return Retorna un objeto usuario si encuentra alguna coincidencia, de lo contrario retorna null.
      * @throws SQLException
      */
-
     public Usuario verificarCredenciales(String nombre, String password) throws SQLException {
         Usuario user = null;
         String sql = "SELECT * FROM " + TABLA + " WHERE nombre = ? AND password = ?";
@@ -111,6 +110,11 @@ public class UserRepository implements Repository<Usuario> {
     @Override
     public void eliminar(Integer primaryKey) throws SQLException {
 
+    }
+
+    @Override
+    public List<Usuario> orderBy(String columna, boolean asc) throws SQLException {
+        return null;
     }
 
     private Connection getConnection() throws SQLException {
