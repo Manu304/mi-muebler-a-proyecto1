@@ -5,6 +5,7 @@
  */
 package com.mrojas.pruebas.mi_muebleria.controllers.user;
 
+import com.mrojas.pruebas.mi_muebleria.models.users.UserRole;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
+import com.mrojas.pruebas.mi_muebleria.services.LoginServiceSession;
 import com.mrojas.pruebas.mi_muebleria.services.user.UserService;
 
 /**
@@ -36,19 +38,15 @@ public class UsuariosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserService service = new UserService();
-        List<Usuario> usuarios = service.listar();
-        request.setAttribute("usuarios", usuarios);
-        getServletContext().getRequestDispatcher("/user/admin/control-usuarios.jsp").forward(request, response);
+        LoginServiceSession sessionService = new LoginServiceSession();
+        if (sessionService.isRole(request, UserRole.ADMIN)) {
+            UserService service = new UserService();
+            List<Usuario> usuarios = service.listar();
+            request.setAttribute("usuarios", usuarios);
+            getServletContext().getRequestDispatcher("/user/admin/control-usuarios.jsp").forward(request, response);
+        }else{
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+        }
 
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
 }

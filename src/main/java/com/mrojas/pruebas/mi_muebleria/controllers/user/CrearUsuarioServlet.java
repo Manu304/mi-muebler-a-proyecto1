@@ -1,5 +1,6 @@
 package com.mrojas.pruebas.mi_muebleria.controllers.user;
 
+import com.mrojas.pruebas.mi_muebleria.models.users.UserRole;
 import com.mrojas.pruebas.mi_muebleria.models.users.Usuario;
 import com.mrojas.pruebas.mi_muebleria.services.LoginServiceSession;
 import com.mrojas.pruebas.mi_muebleria.services.user.UserService;
@@ -35,9 +36,10 @@ public class CrearUsuarioServlet extends HttpServlet {
         String esEdit = request.getParameter("edit");
         String username = request.getParameter("username");
         LoginServiceSession loginService = new LoginServiceSession();
+        //VALIDAR QUE EL USUARIO EXISTA
 
         if (DataValidator.isValidString(username) && Boolean.parseBoolean(esEdit) && DataValidator.isEntero(tipo)
-                && !loginService.isUserSession(request, username)) {
+                && !loginService.isUserSession(request, username) && loginService.isRole(request, UserRole.ADMIN)) {
             request.setAttribute("edit", esEdit);
             request.setAttribute("username", username);
             request.setAttribute("tipo", tipo);
@@ -57,20 +59,22 @@ public class CrearUsuarioServlet extends HttpServlet {
         String userRole = request.getParameter("role");
         String esEdit = request.getParameter("edit");
 
-        System.out.println("nombre en edit: " + username);
-
-        System.out.println("Edit post : " + esEdit);
-
         UserService service = new UserService();
         Optional<Usuario> usuarioEdit = service.porIdentificador(username);
         Map<String, String> errores = new HashMap<>();
-
         // VALIDANDO USERNAME
         if (!DataValidator.isValidString(username)) {
             errores.put("username", "Debes escribir un nombre de usuario");
-        } else {
-            username = username.trim();
+
+        } else if (!DataValidator.isAlfanumerico(username.trim())) {
+            errores.put("username", "No se permiten tildes, ni caracteres extraños (ñ ' , . * / ] } ? !)");
+            System.out.println("Se ha detectado error de caracteres FORM");
         }
+        if (username.trim().length() > 45) {
+            errores.put("username", "El usuario no puede tener más de 45 caracteres");
+            request.setAttribute("username", "");
+        }
+        // VALIDANDO SI ES EDICION
         if (usuarioEdit.isPresent() && !Boolean.parseBoolean(esEdit)) {
             errores.put("username", "Ese nombre de usuario ya ha sido registrado");
         }
@@ -78,11 +82,17 @@ public class CrearUsuarioServlet extends HttpServlet {
             errores.put("username", "No puede cambiar el nombre al usuario");
         }
         // VALIDANDO CONTRASEÑAS
-        if (!DataValidator.isValidString(password) || !DataValidator.isValidString(passworConfirm)) {
+        if (!DataValidator.isValidString(password)) {
             errores.put("password", "Debes escribir una contraseña");
+        } else if (!DataValidator.isAlfanumerico(password)) {
+            errores.put("password", "No se permiten tildes, ni caracteres extraños (ñ ' , . * / ] } ? !)");
         }
+
         if (!password.equals(passworConfirm)) {
             errores.put("cpassword", "Las contraseñas no coinciden");
+        }
+        if (password.length() > 45) {
+            errores.put("password", "La contraseña no puede tener más de 45 caracteres");
         }
 
         if (!DataValidator.isEntero(userRole)) {
@@ -104,10 +114,8 @@ public class CrearUsuarioServlet extends HttpServlet {
             }
 
         } else {
-
-            request.setAttribute("username", username.trim());
+            request.setAttribute("username", username);
             request.setAttribute("tipo", userRole);
-
             request.setAttribute("edit", esEdit);
             request.setAttribute("errores", errores);
             getServletContext().getRequestDispatcher("/user/admin/crear-usuario.jsp").forward(request, response);
