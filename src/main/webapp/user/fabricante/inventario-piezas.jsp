@@ -28,7 +28,6 @@
                 </ul>
             </div>
 
-
             <table class="table table-dark table-striped">
                 <thead>
                     <tr>
