@@ -25,15 +25,6 @@ public class LoginServiceSession {
         return Optional.empty();
     }
 
-    public Optional<UserRole> getUserRole(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserRole userRole = (UserRole) session.getAttribute("userRole");
-        if (userRole != null) {
-            return Optional.of(userRole);
-        }
-        return Optional.empty();
-    }
-
     public boolean getEstado(HttpServletRequest request) {
         HttpSession session = request.getSession();
         boolean estado = false;
@@ -50,6 +41,24 @@ public class LoginServiceSession {
             estado = user.equals(userSession);
         }
         return estado;
+    }
+    
+    public boolean isRole(HttpServletRequest request, UserRole role){
+        boolean siEs = false;
+        UserRole roleActual = getUserRole(request).get();
+        if (roleActual != null && role == roleActual) {
+            siEs = true;
+        }
+        return siEs;   
+    }
+
+    public Optional<UserRole> getUserRole(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserRole userRole = (UserRole) session.getAttribute("userRole");
+        if (userRole != null) {
+            return Optional.of(userRole);
+        }
+        return Optional.empty();
     }
 
 }

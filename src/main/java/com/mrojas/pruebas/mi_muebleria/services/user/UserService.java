@@ -12,21 +12,21 @@ import java.util.Optional;
  *
  * @author Manu
  */
-public class UserService implements EntityService<Usuario>{
+public class UserService implements EntityService<Usuario> {
     private UserRepository userRepository;
-    
-    public UserService(){
+
+    public UserService() {
         this.userRepository = new UserRepository();
     }
-    
-    public Optional<Usuario> login(String nombre, String password){
+
+    public Optional<Usuario> login(String nombre, String password) {
         try {
             return Optional.ofNullable(userRepository.verificarCredenciales(nombre, password));
-            
+
         } catch (SQLException ex) {
             throw new ServiceJdbcException(ex.getMessage(), ex.getCause());
         }
-        
+
     }
 
     @Override
@@ -68,15 +68,17 @@ public class UserService implements EntityService<Usuario>{
         } catch (SQLException e) {
             throw new ServiceJdbcException(e.getMessage(), e.getCause());
         }
-        
+
     }
 
     @Override
     public void eliminar(Integer primaryKey) {
-        
+
     }
 
+    @Override
+    public List<Usuario> orderBy(int columna, boolean asc) {
+        return null;
 
-    
-    
+    }
 }

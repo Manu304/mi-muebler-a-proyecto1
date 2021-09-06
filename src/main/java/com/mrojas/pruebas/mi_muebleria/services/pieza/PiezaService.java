@@ -11,7 +11,13 @@ import com.mrojas.pruebas.mi_muebleria.services.ServiceJdbcException;
 
 public class PiezaService implements EntityService<Pieza> {
 
+    public static final int COL_TIPO = 0;
+    public static final int COL_COSTO = 1;
+    public static final int COL_CANTIDAD = 2;
+    public static final int COL_ID = 3;
+
     private PiezaRepository piezaRepository;
+    private static final String[] COLUMNAS = { "tipo", "costo", "cantidad", "id" };
 
     public PiezaService() {
         this.piezaRepository = new PiezaRepository();
@@ -64,6 +70,18 @@ public class PiezaService implements EntityService<Pieza> {
         try {
             piezaRepository.eliminar(primaryKey);
         } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public List<Pieza> orderBy(int columna, boolean asc) {
+        System.out.println("estoy por ordenar");
+        int col = columna < COLUMNAS.length ? columna : 0;
+        
+        try {
+            return piezaRepository.orderBy(COLUMNAS[col], asc);
+        } catch (ArrayIndexOutOfBoundsException | SQLException e) {
             throw new ServiceJdbcException(e.getMessage(), e.getCause());
         }
     }
