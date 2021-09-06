@@ -12,6 +12,12 @@
     <c:choose>
         <c:when test="${not empty piezas}">
 
+            <div class="container-fluid">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar pieza" aria-label="Search" name="search" value="${search}">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
             <div class="dropdown text-lg-end">
                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     Ordenar piezas por
@@ -27,6 +33,8 @@
                     <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user/fabricante/inventario-piezas?col=4&asc=false">ID: de más alto a más bajo</a></li>
                 </ul>
             </div>
+
+
 
             <table class="table table-dark table-striped">
                 <thead>
