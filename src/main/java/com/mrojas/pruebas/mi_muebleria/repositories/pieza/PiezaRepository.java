@@ -59,21 +59,38 @@ public class PiezaRepository implements Repository<Pieza> {
     @Override
     public void guardar(Pieza t) throws SQLException {
         String sql;
-        boolean existe = t.getTipo() != null && porIdentificador(t.getTipo()) != null;
+        boolean existe = t.getId() != null && porIdentificador(t.getId()) != null;
         if (existe) {
-            sql = "UPDATE " + TABLA + " SET costo = ?, cantidad = ? WHERE tipo = ?";
+            sql = "UPDATE " + TABLA + " SET costo = ?, cantidad = ?, tipo = ? WHERE id = ?";
         } else {
-            sql = "INSERT INTO " + TABLA + " (costo, cantidad, tipo) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO " + TABLA + " (costo, cantidad, tipo) VALUES (?, ?, ?)";
         }
 
         try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setDouble(1, t.getCantidad());
+            stmt.setDouble(1, t.getCosto());
             stmt.setInt(2, t.getCantidad());
             stmt.setString(3, t.getTipo());
+            if (existe) {
+                stmt.setInt(4, t.getId());
+            }
 
             stmt.executeUpdate();
         }
 
+    }
+
+    @Override
+    public List<Pieza> orderBy(String columna, boolean asc) throws SQLException {
+        List<Pieza> piezas = new ArrayList<>();
+        try (Connection connection = getConnection();
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLA + " ORDER BY " + columna + (asc?" ASC":" DESC"))) {
+            while (rs.next()) {
+                Pieza pieza = getPieza(rs);
+                piezas.add(pieza);
+            }
+        }
+        return piezas;
     }
 
     @Override
